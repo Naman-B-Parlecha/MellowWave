@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mellow_wave/Screens/LoadingScreen.dart';
+import 'package:mellow_wave/Screens/MusicScreen.dart';
 import 'package:mellow_wave/Screens/SignUpScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final lofiTheme = ThemeData(
   useMaterial3: true,
@@ -20,7 +26,11 @@ final lofiTheme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const App());
 }
 
@@ -29,6 +39,19 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: lofiTheme, home: SignUpScreen());
+    return MaterialApp(
+        theme: lofiTheme,
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return LoadingScreen();
+            }
+            if (snapshot.hasData) {
+              return const MusicScreen();
+            }
+            return const SignUpScreen();
+          },
+        ));
   }
 }

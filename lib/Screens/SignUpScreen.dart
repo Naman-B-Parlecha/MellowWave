@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -10,7 +13,35 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _form = GlobalKey<FormState>();
   int count = 0;
+
+  var enteredemail = '';
+  var enteredpassword = '';
+
+  void submit() async {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
+    try {
+      if (count == 2) {
+        final usercredential = await firebase.signInWithEmailAndPassword(
+            email: enteredemail, password: enteredpassword);
+        print(usercredential);
+      } else {
+        final usercredential = await firebase.createUserWithEmailAndPassword(
+            email: enteredemail, password: enteredpassword);
+        print(usercredential);
+      }
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? "Authenication Failed.")));
+    }
+  }
+
   Widget? content;
   @override
   Widget build(BuildContext context) {
@@ -159,10 +190,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 30),
                     Container(
-                      height: 180,
+                      height: 200,
                       width: 300,
                       child: SingleChildScrollView(
                           child: Form(
+                        key: _form,
                         child: Column(
                           children: [
                             TextFormField(
@@ -176,6 +208,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    !value.contains('@')) {
+                                  return 'please enter a valid email address';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enteredemail = newValue!;
+                              },
                             ),
                             const SizedBox(height: 20.0),
                             TextFormField(
@@ -189,6 +232,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               obscureText: true,
+                              validator: (value) {
+                                if (value == null || value.trim().length < 6) {
+                                  return 'please enter a password with more than 6 letters';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enteredpassword = newValue!;
+                              },
                             ),
                           ],
                         ),
@@ -196,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 25),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: submit,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -287,10 +339,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 30),
                     Container(
-                      height: 180,
+                      height: 200,
                       width: 300,
                       child: SingleChildScrollView(
                           child: Form(
+                        key: _form,
                         child: Column(
                           children: [
                             TextFormField(
@@ -304,6 +357,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    !value.contains('@')) {
+                                  return 'please enter a valid email address';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enteredemail = newValue!;
+                              },
                             ),
                             const SizedBox(height: 20.0),
                             TextFormField(
@@ -317,6 +381,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               obscureText: true,
+                              validator: (value) {
+                                if (value == null || value.trim().length < 6) {
+                                  return 'please enter a password with more than 6 letters';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enteredpassword = newValue!;
+                              },
                             ),
                           ],
                         ),
@@ -324,7 +397,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 25),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: submit,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),

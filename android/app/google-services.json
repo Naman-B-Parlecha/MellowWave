@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155177872433",
+    "project_id": "mellowwave-ab829",
+    "storage_bucket": "mellowwave-ab829.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155177872433:android:6ac1032870da8ce784b910",
+        "android_client_info": {
+          "package_name": "com.example.mellow_wave"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhRVarxoZF50q9T-a0nghp8MbvfiVbI48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
