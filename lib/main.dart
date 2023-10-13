@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mellow_wave/Screens/LoadingScreen.dart';
-import 'package:mellow_wave/Screens/MusicScreen.dart';
+import 'package:mellow_wave/Screens/homeScreen.dart';
 import 'package:mellow_wave/Screens/SignUpScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,7 +48,7 @@ class App extends StatelessWidget {
               return LoadingScreen();
             }
             if (snapshot.hasData) {
-              return const MusicScreen();
+              return const HomeScreen();
             }
             return const SignUpScreen();
           },
