@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mellow_wave/Widgets/CustomContainer.dart';
 import 'package:mellow_wave/Widgets/CustomDrawer.dart';
 import 'package:mellow_wave/data/Categories.dart';
+import 'package:mellow_wave/Screens/MusicScreen.dart'; // Added import for MusicScreen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,8 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _scaffoldKey.currentState?.openDrawer();
   }
 
-  List<String> names = categories;
-  List<String> images = catimages;
+  List<CategoryList> category = catlist;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +49,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.80, // to achieve the 2x4 column (width/height)
+          childAspectRatio: 0.80,
         ),
         itemCount: 8,
         itemBuilder: (context, index) {
           return CustomContainer(
-            backimage: catimages[index],
-            name: categories[index],
+            backimage: category[index].image,
+            name: category[index].name,
+            onTap: () {
+              // Navigate to MusicScreen when the CustomContainer is tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MusicScreen(
+                    playlistId: category[index].playlist,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

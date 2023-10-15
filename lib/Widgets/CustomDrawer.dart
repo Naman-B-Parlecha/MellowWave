@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 
@@ -65,7 +66,9 @@ class CustomDrawer extends StatelessWidget {
           ),
           const SizedBox(height: 3),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
             title: const Text("Logout",
                 style: TextStyle(
                     color: Color(0xFF52734D),
