@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -8,20 +9,32 @@ import 'dart:convert';
 // lightblue = 46,106,157
 
 class MusicScreen extends StatefulWidget {
-  final String playlistId; // Playlist ID
-
-  const MusicScreen({required this.playlistId, Key? key}) : super(key: key);
+  final String playlistId;
+  final String playlistimg;
+  final String playlistname;
+  const MusicScreen(
+      {required this.playlistId,
+      required this.playlistimg,
+      required this.playlistname,
+      super.key});
 
   @override
   State<MusicScreen> createState() {
-    return _MusicScreenState(playlistId: playlistId);
+    return _MusicScreenState(
+        playlistId: playlistId,
+        playlistimage: playlistimg,
+        playlistname: playlistname);
   }
 }
 
 class _MusicScreenState extends State<MusicScreen> {
   final String playlistId; // Playlist ID
-
-  _MusicScreenState({required this.playlistId});
+  final String playlistimage;
+  final String playlistname;
+  _MusicScreenState(
+      {required this.playlistId,
+      required this.playlistimage,
+      required this.playlistname});
 
   List<dynamic> playlistItems = [];
 
@@ -85,38 +98,74 @@ class _MusicScreenState extends State<MusicScreen> {
         backgroundColor: const Color.fromARGB(255, 14, 36, 83),
         title: const Text('Spotify Playlist'),
       ),
-      body: ListView.builder(
-        itemCount: playlistItems.length,
-        itemBuilder: (context, index) {
-          final track = playlistItems[index]['track'];
-          final album = track['album'];
-          final albumImageUrl = album['images'][0]['url'];
-          return Container(
-            margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+            height: 350,
+            width: 285,
             decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 249, 124, 92),
-                      Color.fromARGB(255, 234, 42, 79),
-                    ])),
-            child: ListTile(
-              leading: Image.network(
-                albumImageUrl,
-                width: 50.0,
-                height: 50.0,
-              ),
-              title: Text(
-                track['name'],
-                style: const TextStyle(color: Colors.black),
-              ),
-              subtitle: Text(track['artists'][0]['name'],
-                  style: const TextStyle(color: Colors.black)),
+                color: Colors.yellowAccent,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 250,
+                  height: 250,
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      image: DecorationImage(
+                          image: AssetImage(playlistimage), fit: BoxFit.cover)),
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  playlistname,
+                  style: GoogleFonts.kaushanScript(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 25),
+                )
+              ],
             ),
-          );
-        },
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView.builder(
+              itemCount: playlistItems.length,
+              itemBuilder: (context, index) {
+                final track = playlistItems[index]['track'];
+                final album = track['album'];
+                final albumImageUrl = album['images'][0]['url'];
+                return Container(
+                  margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color.fromARGB(255, 249, 124, 92),
+                            Color.fromARGB(255, 234, 42, 79),
+                          ])),
+                  child: ListTile(
+                    leading: Image.network(
+                      albumImageUrl,
+                      width: 50.0,
+                      height: 50.0,
+                    ),
+                    title: Text(
+                      track['name'],
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    subtitle: Text(track['artists'][0]['name'],
+                        style: const TextStyle(color: Colors.black)),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

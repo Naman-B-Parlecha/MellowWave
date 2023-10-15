@@ -62,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MusicScreen(
+                    playlistimg: category[index].image,
                     playlistId: category[index].playlist,
+                    playlistname: category[index].name,
                   ),
                 ),
               );
