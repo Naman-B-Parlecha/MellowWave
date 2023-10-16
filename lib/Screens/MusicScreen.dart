@@ -86,7 +86,7 @@ class _MusicScreenState extends State<MusicScreen> {
   void initState() {
     super.initState();
     authenticateSpotify().then((token) {
-      fetchPlaylist(token, playlistId); // Pass the playlist ID
+      fetchPlaylist(token, playlistId);
     });
   }
 
@@ -98,56 +98,74 @@ class _MusicScreenState extends State<MusicScreen> {
         backgroundColor: const Color.fromARGB(255, 14, 36, 83),
         title: const Text('Spotify Playlist'),
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
-            height: 350,
-            width: 285,
-            decoration: const BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+              height: 350,
+              width: 285,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  end: Alignment.centerLeft,
+                  begin: Alignment.centerRight,
+                  colors: [
+                    Color.fromARGB(255, 249, 124, 92),
+                    Color.fromARGB(255, 234, 42, 79),
+                  ],
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 250,
+                    height: 250,
+                    decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                       image: DecorationImage(
-                          image: AssetImage(playlistimage), fit: BoxFit.cover)),
-                ),
-                const SizedBox(height: 15),
-                Text(
-                  playlistname,
-                  style: GoogleFonts.kaushanScript(
+                        image: AssetImage(playlistimage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(
+                    playlistname,
+                    style: GoogleFonts.kaushanScript(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
-                      fontSize: 25),
-                )
-              ],
+                      fontSize: 25,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: ListView.builder(
+            const SizedBox(height: 20),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: playlistItems.length,
               itemBuilder: (context, index) {
                 final track = playlistItems[index]['track'];
                 final album = track['album'];
                 final albumImageUrl = album['images'][0]['url'];
+                final trackurl = track['external_urls']['spotify'];
                 return Container(
                   margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
                   decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color.fromARGB(255, 249, 124, 92),
-                            Color.fromARGB(255, 234, 42, 79),
-                          ])),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromARGB(255, 249, 124, 92),
+                        Color.fromARGB(255, 234, 42, 79),
+                      ],
+                    ),
+                  ),
                   child: ListTile(
                     leading: Image.network(
                       albumImageUrl,
@@ -156,16 +174,20 @@ class _MusicScreenState extends State<MusicScreen> {
                     ),
                     title: Text(
                       track['name'],
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w600),
                     ),
-                    subtitle: Text(track['artists'][0]['name'],
-                        style: const TextStyle(color: Colors.black)),
+                    subtitle: Text(
+                      track['artists'][0]['name'],
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

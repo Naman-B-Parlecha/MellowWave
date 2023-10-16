@@ -39,7 +39,7 @@ class CustomContainer extends StatelessWidget {
                 color: Color(0xFFBBE1FA).withOpacity(0.5),
               ),
               padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(left: 10, bottom: 10),
+              margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
               child: Text(
                 name,
                 style: GoogleFonts.exo2(
