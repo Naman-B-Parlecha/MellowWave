@@ -60,4 +60,8 @@ List<CategoryList> catlist = [
       name: 'Instrumental Lo-fi',
       image: 'assets/images/instrumental.jpg',
       playlist: '4DvDLiZxLeUHWMErYhncB5'),
+  CategoryList(
+      name: 'Chilling Out',
+      image: 'assets/images/chilling.jpg',
+      playlist: '37i9dQZF1DX32oVqaQE8BM')
 ];

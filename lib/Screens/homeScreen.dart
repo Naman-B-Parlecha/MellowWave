@@ -25,22 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF57837B),
+      backgroundColor: const Color(0xFF48426D),
       key: _scaffoldKey,
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF57837B),
+        backgroundColor: const Color(0xFF48426D),
         title: Text(
-          '\t\t\t\t\t\tMellow Wave',
+          '\t\t\t\t\t\t\tMellow Wave',
           style: GoogleFonts.montserrat(
-              color: const Color(0xFFF1ECC3),
+              color: const Color(0xFFEFC28D),
               fontWeight: FontWeight.w600,
               fontSize: 25),
         ),
         leading: IconButton(
           icon: const Icon(
             Boxicons.bx_menu,
-            color: Color(0xFFF1ECC3),
+            color: const Color(0xFFEFC28D),
             size: 27,
           ),
           onPressed: _openDrawer,
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisCount: 2,
           childAspectRatio: 0.80,
         ),
-        itemCount: 8,
+        itemCount: 9,
         itemBuilder: (context, index) {
           return CustomContainer(
             backimage: category[index].image,

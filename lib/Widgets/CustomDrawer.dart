@@ -7,7 +7,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFFEDF1D6),
+      backgroundColor: const Color(0xFF292541),
       child: Container(
         child: ListView(children: [
           const SizedBox(height: 5),
@@ -15,55 +15,55 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {},
             title: const Text("Home",
                 style: TextStyle(
-                    color: Color(0xFF52734D),
+                    color: Color(0xFFEFC28D),
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
             leading: const Icon(
               Boxicons.bx_home,
-              color: Color(0xFF52734D),
+              color: Color(0xFFEFC28D),
               size: 27,
             ),
           ),
           const SizedBox(height: 3),
           ListTile(
             onTap: () {},
-            title: const Text("category 1",
+            title: const Text("source code",
                 style: TextStyle(
-                    color: Color(0xFF52734D),
+                    color: Color(0xFFEFC28D),
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
             leading: const Icon(
-              Boxicons.bx_home,
-              color: Color(0xFF52734D),
+              Boxicons.bxl_github,
+              color: Color(0xFFEFC28D),
               size: 27,
             ),
           ),
           ListTile(
             onTap: () {},
-            title: const Text("category 2",
+            title: const Text("share",
                 style: TextStyle(
-                    color: Color(0xFF52734D),
+                    color: Color(0xFFEFC28D),
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
             leading: const Icon(
-              Boxicons.bx_home,
-              color: Color(0xFF52734D),
+              Boxicons.bx_share_alt,
+              color: Color(0xFFEFC28D),
               size: 27,
             ),
           ),
-          ListTile(
-            onTap: () {},
-            title: const Text("category 3",
-                style: TextStyle(
-                    color: Color(0xFF52734D),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold)),
-            leading: const Icon(
-              Boxicons.bx_home,
-              color: Color(0xFF52734D),
-              size: 27,
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {},
+          //   title: const Text("category 3",
+          //       style: TextStyle(
+          //           color: Color(0xFFEFC28D),
+          //           fontSize: 20,
+          //           fontWeight: FontWeight.bold)),
+          //   leading: const Icon(
+          //     Boxicons.bx_home,
+          //     color: Color(0xFFEFC28D),
+          //     size: 27,
+          //   ),
+          // ),
           const SizedBox(height: 3),
           ListTile(
             onTap: () {
@@ -71,12 +71,12 @@ class CustomDrawer extends StatelessWidget {
             },
             title: const Text("Logout",
                 style: TextStyle(
-                    color: Color(0xFF52734D),
+                    color: Color(0xFFEFC28D),
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
             leading: const Icon(
               Boxicons.bxs_log_out,
-              color: Color(0xFF52734D),
+              color: Color(0xFFEFC28D),
               size: 27,
             ),
           )

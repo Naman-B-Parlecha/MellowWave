@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:audioplayers/audioplayers.dart';
 // orange = 249,124,92
 // redpink = 234,42,79
 // midnight blue = 14,36,83
@@ -37,7 +37,6 @@ class _MusicScreenState extends State<MusicScreen> {
       required this.playlistname});
 
   List<dynamic> playlistItems = [];
-
   Future<String> authenticateSpotify() async {
     const String tokenUrl = 'https://accounts.spotify.com/api/token';
     const String clientId = 'bfc704ac59b94b41ba6449ffb617515d';
@@ -92,30 +91,25 @@ class _MusicScreenState extends State<MusicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 14, 36, 83),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 14, 36, 83),
-        title: const Text('Spotify Playlist'),
-      ),
-      body: SingleChildScrollView(
+    Widget? content;
+
+    if (playlistItems.isEmpty) {
+      content = const Center(
+        child: CircularProgressIndicator(color: Color(0xFFEFC28D)),
+      );
+    } else {
+      content = SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 10),
             Container(
-              padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+              padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               height: 350,
               width: 285,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  end: Alignment.centerLeft,
-                  begin: Alignment.centerRight,
-                  colors: [
-                    Color.fromARGB(255, 249, 124, 92),
-                    Color.fromARGB(255, 234, 42, 79),
-                  ],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                color: Color(0xFFEFC28D),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,20 +118,33 @@ class _MusicScreenState extends State<MusicScreen> {
                     width: 250,
                     height: 250,
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15)),
                       image: DecorationImage(
                         image: AssetImage(playlistimage),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Text(
-                    playlistname,
-                    style: GoogleFonts.kaushanScript(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 25,
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 50,
+                    width: 250,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF292541),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15)),
+                    ),
+                    child: Text(
+                      playlistname,
+                      style: GoogleFonts.stylish(
+                        color: const Color(0xFFEFC28D),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ],
@@ -146,41 +153,39 @@ class _MusicScreenState extends State<MusicScreen> {
             const SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: playlistItems.length,
               itemBuilder: (context, index) {
                 final track = playlistItems[index]['track'];
                 final album = track['album'];
                 final albumImageUrl = album['images'][0]['url'];
                 final trackurl = track['external_urls']['spotify'];
+
                 return Container(
+                  height: 75,
                   margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromARGB(255, 249, 124, 92),
-                        Color.fromARGB(255, 234, 42, 79),
-                      ],
-                    ),
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Color(0xFF292541)),
                   child: ListTile(
-                    leading: Image.network(
-                      albumImageUrl,
-                      width: 50.0,
-                      height: 50.0,
+                    leading: ClipOval(
+                      child: Image.network(
+                        albumImageUrl,
+                        width: 50.0,
+                        height: 50.0,
+                      ),
                     ),
                     title: Text(
                       track['name'],
                       style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w600),
+                          color: Color(0xFFEFC28D),
+                          fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
                       track['artists'][0]['name'],
                       style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w600),
+                          color: Color(0xFFEFC28D),
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 );
@@ -188,7 +193,20 @@ class _MusicScreenState extends State<MusicScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    }
+    return Scaffold(
+        backgroundColor: const Color(0xFF48426D),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF48426D),
+          title: Text(
+            '\t\t\t\t\t\t\t\t\tMellowWave',
+            style: GoogleFonts.montserrat(
+                color: const Color(0xFFEFC28D),
+                fontWeight: FontWeight.w600,
+                fontSize: 22),
+          ),
+        ),
+        body: content);
   }
 }

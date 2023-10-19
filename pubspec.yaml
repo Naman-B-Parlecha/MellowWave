@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.10.1
   flutter_boxicons: ^3.0.0
   http: ^1.1.0
+  audioplayers: ^5.2.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
   - assets/images/HipHop.jpg
   - assets/images/instrumental.jpg
   - assets/images/electronic.jpg
+  - assets/images/chilling.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

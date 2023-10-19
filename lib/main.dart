@@ -11,9 +11,9 @@ import 'firebase_options.dart';
 final lofiTheme = ThemeData(
   useMaterial3: true,
   colorScheme: const ColorScheme(
-    primary: Color(0xFF515E63), // Primary color (background)
-    secondary: Color(0xFFC9D8B6), // Secondary color (buttons, etc.)
-    background: Color(0xFFF1ECC3), // Updated background color using F1ECC3
+    primary: Color(0xFFEFC28D), // Primary color (background)
+    secondary: Color(0xFF292541), // Secondary color (buttons, etc.)
+    background: Color(0xFF48426D), // Updated background color using F1ECC3
     surface: Color(0xFF57837B), // Accents/Highlights
     error: Color(0xFFCC3333), // Soft red for error
     onPrimary: Colors.white, // Text on primary (light color for contrast)

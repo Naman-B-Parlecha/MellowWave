@@ -36,7 +36,7 @@ class CustomContainer extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Color(0xFFBBE1FA).withOpacity(0.5),
+                color: Color(0xFF292541),
               ),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
@@ -45,7 +45,7 @@ class CustomContainer extends StatelessWidget {
                 style: GoogleFonts.exo2(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF1B262C),
+                  color: const Color(0xFFEFC28D),
                 ),
                 textAlign: TextAlign.center,
               ),
