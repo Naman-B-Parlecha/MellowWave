@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:audioplayers/audioplayers.dart';
+
+import 'package:mellow_wave/Widgets/MusicControllingBox.dart';
+// import 'package:audioplayers/audioplayers.dart';
 // orange = 249,124,92
 // redpink = 234,42,79
 // midnight blue = 14,36,83
@@ -151,6 +153,8 @@ class _MusicScreenState extends State<MusicScreen> {
               ),
             ),
             const SizedBox(height: 20),
+            MusicControlBox(),
+            const SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -159,7 +163,7 @@ class _MusicScreenState extends State<MusicScreen> {
                 final track = playlistItems[index]['track'];
                 final album = track['album'];
                 final albumImageUrl = album['images'][0]['url'];
-                final trackurl = track['external_urls']['spotify'];
+                // final trackurl = track['external_urls']['spotify'];
 
                 return Container(
                   height: 75,
