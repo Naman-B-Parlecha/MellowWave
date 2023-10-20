@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: double.infinity,
               height: 400,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFF48426D),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -78,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     'Welcome to MellowWave',
                     style: GoogleFonts.montserrat(
+                      color: Color(0xFFEFC28D),
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
@@ -87,8 +88,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     'Relax and enjoy Lofi beats\neffortlessly.',
                     style: GoogleFonts.montserrat(
+                      color: Color(0xFFEFC28D),
                       fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -103,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
+                      backgroundColor: Color(0xFF292541),
                       padding: const EdgeInsets.all(16),
                     ),
                     child: SizedBox(
@@ -125,6 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Text(
                         'Already have an account?',
                         style: GoogleFonts.montserrat(
+                          color: Color(0xFFEFC28D),
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -139,6 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           'Sign In',
                           style: GoogleFonts.montserrat(
+                            color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -174,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 height: 500,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFF48426D),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -185,7 +190,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       'Create a new account',
                       style: GoogleFonts.montserrat(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                          color: Color(0xFFEFC28D),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 30),
@@ -198,11 +205,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Column(
                           children: [
                             TextFormField(
+                              style: TextStyle(color: Color(0xFFEFC28D)),
                               decoration: InputDecoration(
                                 labelText: 'Email address',
                                 hintText: 'Enter your email',
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Color(0xFFEFC28D)),
+                                hintStyle: TextStyle(color: Color(0xFFEFC28D)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -222,11 +230,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             const SizedBox(height: 20.0),
                             TextFormField(
+                              style: TextStyle(color: Color(0xFFEFC28D)),
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 hintText: 'Enter your password',
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Color(0xFFEFC28D)),
+                                hintStyle: TextStyle(color: Color(0xFFEFC28D)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -246,13 +255,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       )),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: submit,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        backgroundColor: Color(0xFF292541),
                         padding: const EdgeInsets.all(16),
                       ),
                       child: SizedBox(
@@ -275,9 +285,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(
                           'Already have an account?',
                           style: GoogleFonts.montserrat(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFFEFC28D)),
                           textAlign: TextAlign.center,
                         ),
                         TextButton(
@@ -289,6 +299,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'Sign In',
                             style: GoogleFonts.montserrat(
+                              color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
@@ -323,7 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 height: 500,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFF48426D),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -334,7 +345,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       'Welcome back',
                       style: GoogleFonts.montserrat(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                          color: Color(0xFFEFC28D),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 30),
@@ -347,11 +360,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Column(
                           children: [
                             TextFormField(
+                              style: TextStyle(color: Color(0xFFEFC28D)),
                               decoration: InputDecoration(
                                 labelText: 'Email address',
                                 hintText: 'Enter your email',
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Color(0xFFEFC28D)),
+                                hintStyle: TextStyle(color: Color(0xFFEFC28D)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -371,11 +385,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             const SizedBox(height: 20.0),
                             TextFormField(
+                              style: TextStyle(color: Color(0xFFEFC28D)),
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 hintText: 'Enter your password',
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintStyle: TextStyle(color: Colors.black),
+                                labelStyle: TextStyle(color: Color(0xFFEFC28D)),
+                                hintStyle: TextStyle(color: Color(0xFFEFC28D)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -395,13 +410,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       )),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: submit,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        backgroundColor: Color(0xFF292541),
                         padding: const EdgeInsets.all(16),
                       ),
                       child: SizedBox(
@@ -424,6 +440,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(
                           'Don\'t have an account?',
                           style: GoogleFonts.montserrat(
+                            color: Color(0xFFEFC28D),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -438,6 +455,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'Sign up',
                             style: GoogleFonts.montserrat(
+                              color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
