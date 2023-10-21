@@ -41,6 +41,7 @@ dependencies:
   flutter_boxicons: ^3.0.0
   http: ^1.1.0
   audioplayers: ^5.2.0
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:
