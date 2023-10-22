@@ -71,8 +71,8 @@ List<CategoryList> catlist = [
   CategoryList(
     name: 'HipHop',
     image: 'assets/images/HipHop.jpg',
-    // playlist: '3EhBDWFjL8O3m5SrCcE6ik',
-    playlist: '3BOxfexQyBa1tsEZ1tJFVQ',
+    playlist: '37i9dQZF1DX36Xw4IJIVKA',
+    // playlist: '3BOxfexQyBa1tsEZ1tJFVQ',
     // ytlist: '',
   ),
   CategoryList(
@@ -86,7 +86,8 @@ List<CategoryList> catlist = [
       name: 'Instrumental Lo-fi',
       image: 'assets/images/instrumental.jpg',
       // playlist: '0aJjUcrrnLxSL3ANCEFRiU',
-      playlist: '4DvDLiZxLeUHWMErYhncB5'
+      playlist: '37i9dQZF1DX8Uebhn9wzrS'
+
       // ytlist: '',
       ),
   CategoryList(

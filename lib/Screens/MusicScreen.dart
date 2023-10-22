@@ -1,10 +1,10 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mellow_wave/Widgets/MusicControllingBox.dart';
 // import 'package:audioplayers/audioplayers.dart';
 // orange = 249,124,92
 // redpink = 234,42,79
@@ -40,6 +40,21 @@ class _MusicScreenState extends State<MusicScreen> {
       required this.playlistname});
 
   List<dynamic> playlistItems = [];
+
+  final audioplayer = AudioPlayer();
+  bool isPlaying = false;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
+  List<String> musicUrls = [];
+  int currentTrackIndex = 0;
+
+  @override
+  void dispose() {
+    audioplayer.dispose();
+    super.dispose();
+  }
+
   Future<String> authenticateSpotify() async {
     const String tokenUrl = 'https://accounts.spotify.com/api/token';
     const String clientId = 'bfc704ac59b94b41ba6449ffb617515d';
@@ -90,6 +105,70 @@ class _MusicScreenState extends State<MusicScreen> {
     authenticateSpotify().then((token) {
       fetchPlaylist(token, playlistId);
     });
+
+    audioplayer.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == PlayerState.playing;
+      });
+    });
+    audioplayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+    audioplayer.onPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
+    // Listen for player completion to play the next track
+    audioplayer.onPlayerComplete.listen((event) {
+      playNextTrack();
+    });
+
+    // Start playing the first track
+    // playTrack(currentTrackIndex);
+  }
+
+  String formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(':');
+  }
+
+  void playTrack(int index) async {
+    if (index < 0 || index >= musicUrls.length) {
+      return;
+    }
+    final url = musicUrls[index];
+    await audioplayer.play(UrlSource(url));
+    currentTrackIndex = index;
+  }
+
+  void playNextTrack() {
+    if (currentTrackIndex < musicUrls.length - 1) {
+      playTrack(currentTrackIndex + 1);
+    } else {
+      // You've reached the end of the playlist, handle as needed (loop or stop).
+      // For example, you can implement a loop to start playing the first track again:
+      playTrack(0);
+    }
+  }
+
+  void playPreviousTrack() {
+    if (currentTrackIndex < musicUrls.length - 1 && currentTrackIndex > 0) {
+      playTrack(currentTrackIndex - 1);
+    } else {
+      // You've reached the end of the playlist, handle as needed (loop or stop).
+      // For example, you can implement a loop to start playing the first track again:
+      playTrack(0);
+    }
   }
 
   @override
@@ -161,11 +240,12 @@ class _MusicScreenState extends State<MusicScreen> {
                   color: const Color(0xFF292541),
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               width: 350,
-              height: 175,
+              height: 200,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       'Ghost in Mist',
                       style: GoogleFonts.montserrat(
@@ -180,51 +260,69 @@ class _MusicScreenState extends State<MusicScreen> {
                           fontSize: 14,
                           fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 16),
-                    Container(
-                      width: 300,
-                      child: const LinearProgressIndicator(
-                        value: 0.30,
-                        backgroundColor: Color(0xFF48426D),
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFFEFC28D)),
-                      ),
+                    const SizedBox(height: 5),
+                    Slider(
+                        min: 0,
+                        max: duration.inSeconds.toDouble(),
+                        value: position.inSeconds.toDouble(),
+                        onChanged: (value) async {
+                          final position = Duration(seconds: value.toInt());
+                          await audioplayer.seek(position);
+
+                          await audioplayer.resume();
+                        }),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              formatTime(position),
+                              style: TextStyle(color: Color(0xFFEFC28D)),
+                            ),
+                            Text(formatTime(duration),
+                                style: TextStyle(color: Color(0xFFEFC28D)))
+                          ]),
                     ),
-                    const SizedBox(height: 10),
                     Row(
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // IconButton(
-                        //     onPressed: () {},
-                        //     icon: const Icon(
-                        //       Boxicons.bx_shuffle,
-                        //       size: 30,
-                        //     )),
                         IconButton(
                             onPressed: () {},
+                            icon: const Icon(
+                              Boxicons.bx_shuffle,
+                              size: 30,
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              playPreviousTrack();
+                            },
                             icon: const Icon(
                               Boxicons.bx_chevrons_left,
                               size: 45,
                             )),
                         IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Boxicons.bx_pause,
-                              size: 45,
-                            )),
+                          icon: Icon(isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow), // Içon
+                          iconSize: 50,
+                          onPressed: () async {
+                            if (isPlaying) {
+                              await audioplayer.pause();
+                            } else {
+                              playNextTrack();
+                            }
+                          },
+                        ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              playNextTrack();
+                            },
                             icon: const Icon(
                               Boxicons.bx_chevrons_right,
                               size: 45,
                             )),
-                        // IconButton(
-                        //     onPressed: () {},
-                        //     icon: const Icon(
-                        //       Boxicons.bx_pulse,
-                        //       size: 35,
-                        //     ))
                       ],
                     )
                   ]),
@@ -240,7 +338,9 @@ class _MusicScreenState extends State<MusicScreen> {
                 final album = track['album'];
                 final albumImageUrl = album['images'][0]['url'];
                 String preview = track['preview_url'];
-                // print(track['name'] + '=' + preview);
+                if (preview != '') {
+                  musicUrls.add(preview);
+                }
                 return Container(
                   height: 75,
                   margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),

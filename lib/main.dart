@@ -17,7 +17,7 @@ final lofiTheme = ThemeData(
     secondary: Color(0xFF292541), // Secondary color (buttons, etc.)
     background: Color(0xFF48426D), // Updated background color using F1ECC3
     surface: Color(0xFF57837B), // Accents/Highlights
-    error: Color.fromARGB(255, 161, 46, 46), // Soft red for error
+    error: Colors.redAccent, // Soft red for error
     onPrimary: Colors.white, // Text on primary (light color for contrast)
     onSecondary: Colors.black, // Text on secondary (dark color for contrast)
     onBackground: Colors.black, // Text on background (dark color for contrast)
