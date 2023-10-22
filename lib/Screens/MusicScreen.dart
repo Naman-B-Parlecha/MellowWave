@@ -125,7 +125,6 @@ class _MusicScreenState extends State<MusicScreen> {
     audioplayer.onPlayerComplete.listen((event) {
       playNextTrack();
     });
-
     // Start playing the first track
     // playTrack(currentTrackIndex);
   }
@@ -149,14 +148,13 @@ class _MusicScreenState extends State<MusicScreen> {
     final url = musicUrls[index];
     await audioplayer.play(UrlSource(url));
     currentTrackIndex = index;
+    print(currentTrackIndex);
   }
 
   void playNextTrack() {
     if (currentTrackIndex < musicUrls.length - 1) {
       playTrack(currentTrackIndex + 1);
     } else {
-      // You've reached the end of the playlist, handle as needed (loop or stop).
-      // For example, you can implement a loop to start playing the first track again:
       playTrack(0);
     }
   }
@@ -165,8 +163,6 @@ class _MusicScreenState extends State<MusicScreen> {
     if (currentTrackIndex < musicUrls.length - 1 && currentTrackIndex > 0) {
       playTrack(currentTrackIndex - 1);
     } else {
-      // You've reached the end of the playlist, handle as needed (loop or stop).
-      // For example, you can implement a loop to start playing the first track again:
       playTrack(0);
     }
   }
@@ -236,8 +232,8 @@ class _MusicScreenState extends State<MusicScreen> {
             // Controlling music here
             // MusicControlBox(),
             Container(
-              decoration: BoxDecoration(
-                  color: const Color(0xFF292541),
+              decoration: const BoxDecoration(
+                  color: Color(0xFF292541),
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               width: 350,
               height: 200,
@@ -245,16 +241,17 @@ class _MusicScreenState extends State<MusicScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
-                      'Ghost in Mist',
+                      playlistItems[currentTrackIndex]['track']['name'],
                       style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      'softy',
+                      playlistItems[currentTrackIndex]['track']['artists'][0]
+                          ['name'],
                       style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontSize: 14,
@@ -272,16 +269,17 @@ class _MusicScreenState extends State<MusicScreen> {
                           await audioplayer.resume();
                         }),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               formatTime(position),
-                              style: TextStyle(color: Color(0xFFEFC28D)),
+                              style: const TextStyle(color: Color(0xFFEFC28D)),
                             ),
                             Text(formatTime(duration),
-                                style: TextStyle(color: Color(0xFFEFC28D)))
+                                style:
+                                    const TextStyle(color: Color(0xFFEFC28D)))
                           ]),
                     ),
                     Row(
@@ -310,6 +308,10 @@ class _MusicScreenState extends State<MusicScreen> {
                           onPressed: () async {
                             if (isPlaying) {
                               await audioplayer.pause();
+                            } else if (currentTrackIndex == 0) {
+                              playTrack(0);
+                            } else if (position != duration && !isPlaying) {
+                              playTrack(currentTrackIndex);
                             } else {
                               playNextTrack();
                             }
@@ -341,34 +343,65 @@ class _MusicScreenState extends State<MusicScreen> {
                 if (preview != '') {
                   musicUrls.add(preview);
                 }
-                return Container(
-                  height: 75,
-                  margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Color(0xFF292541)),
-                  child: ListTile(
-                    leading: ClipOval(
-                      child: Image.network(
-                        albumImageUrl,
-                        width: 50.0,
-                        height: 50.0,
+                if (currentTrackIndex == index) {
+                  return Container(
+                    height: 75,
+                    margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Color(0xFFEFC28D)),
+                    child: ListTile(
+                      leading: ClipOval(
+                        child: Image.network(
+                          albumImageUrl,
+                          width: 50.0,
+                          height: 50.0,
+                        ),
+                      ),
+                      title: Text(
+                        track['name'],
+                        style: const TextStyle(
+                            color: Color(0xFF292541),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: Text(
+                        track['artists'][0]['name'],
+                        style: const TextStyle(
+                            color: Color(0xFF292541),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-                    title: Text(
-                      track['name'],
-                      style: const TextStyle(
-                          color: Color(0xFFEFC28D),
-                          fontWeight: FontWeight.w600),
+                  );
+                } else {
+                  return Container(
+                    height: 75,
+                    margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Color(0xFF292541)),
+                    child: ListTile(
+                      leading: ClipOval(
+                        child: Image.network(
+                          albumImageUrl,
+                          width: 50.0,
+                          height: 50.0,
+                        ),
+                      ),
+                      title: Text(
+                        track['name'],
+                        style: const TextStyle(
+                            color: Color(0xFFEFC28D),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: Text(
+                        track['artists'][0]['name'],
+                        style: const TextStyle(
+                            color: Color(0xFFEFC28D),
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
-                    subtitle: Text(
-                      track['artists'][0]['name'],
-                      style: const TextStyle(
-                          color: Color(0xFFEFC28D),
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                );
+                  );
+                }
               },
             ),
           ],
