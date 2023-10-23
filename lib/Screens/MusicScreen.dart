@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'dart:math';
+
+Random random = Random();
 // import 'package:audioplayers/audioplayers.dart';
 // orange = 249,124,92
 // redpink = 234,42,79
@@ -45,9 +48,9 @@ class _MusicScreenState extends State<MusicScreen> {
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
-
   List<String> musicUrls = [];
   int currentTrackIndex = 0;
+  bool isShuffled = false;
 
   @override
   void dispose() {
@@ -152,10 +155,18 @@ class _MusicScreenState extends State<MusicScreen> {
   }
 
   void playNextTrack() {
-    if (currentTrackIndex < musicUrls.length - 1) {
-      playTrack(currentTrackIndex + 1);
+    if (isShuffled) {
+      setState(() {
+        int randomIndex = random.nextInt(100);
+        currentTrackIndex = randomIndex;
+        playTrack(currentTrackIndex);
+      });
     } else {
-      playTrack(0);
+      if (currentTrackIndex < musicUrls.length - 1) {
+        playTrack(currentTrackIndex + 1);
+      } else {
+        playTrack(0);
+      }
     }
   }
 
@@ -287,11 +298,24 @@ class _MusicScreenState extends State<MusicScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Boxicons.bx_shuffle,
-                              size: 30,
-                            )),
+                          onPressed: () {
+                            setState(() {
+                              if (isShuffled) {
+                                isShuffled = false;
+                              } else {
+                                isShuffled = true;
+                              }
+                            });
+                          },
+                          icon: isShuffled
+                              ? const Icon(Boxicons.bx_shuffle,
+                                  color: Color(0xFFEFC28D), size: 35)
+                              : const Icon(
+                                  Boxicons.bx_shuffle,
+                                  size: 35,
+                                  color: Colors.white,
+                                ),
+                        ),
                         IconButton(
                             onPressed: () {
                               playPreviousTrack();
@@ -339,9 +363,12 @@ class _MusicScreenState extends State<MusicScreen> {
                 final track = playlistItems[index]['track'];
                 final album = track['album'];
                 final albumImageUrl = album['images'][0]['url'];
-                String preview = track['preview_url'];
-                if (preview != '') {
-                  musicUrls.add(preview);
+                for (var item in playlistItems) {
+                  final track = item['track'];
+                  final previewUrl = track['preview_url'];
+                  if (previewUrl != null) {
+                    musicUrls.add(previewUrl);
+                  }
                 }
                 if (currentTrackIndex == index) {
                   return Container(
@@ -373,31 +400,37 @@ class _MusicScreenState extends State<MusicScreen> {
                     ),
                   );
                 } else {
-                  return Container(
-                    height: 75,
-                    margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color(0xFF292541)),
-                    child: ListTile(
-                      leading: ClipOval(
-                        child: Image.network(
-                          albumImageUrl,
-                          width: 50.0,
-                          height: 50.0,
+                  return InkWell(
+                    onTap: () {
+                      playTrack(index);
+                    },
+                    child: Container(
+                      height: 75,
+                      margin:
+                          const EdgeInsets.only(left: 8, right: 8, bottom: 7),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color(0xFF292541)),
+                      child: ListTile(
+                        leading: ClipOval(
+                          child: Image.network(
+                            albumImageUrl,
+                            width: 50.0,
+                            height: 50.0,
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        track['name'],
-                        style: const TextStyle(
-                            color: Color(0xFFEFC28D),
-                            fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        track['artists'][0]['name'],
-                        style: const TextStyle(
-                            color: Color(0xFFEFC28D),
-                            fontWeight: FontWeight.w600),
+                        title: Text(
+                          track['name'],
+                          style: const TextStyle(
+                              color: Color(0xFFEFC28D),
+                              fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text(
+                          track['artists'][0]['name'],
+                          style: const TextStyle(
+                              color: Color(0xFFEFC28D),
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                   );

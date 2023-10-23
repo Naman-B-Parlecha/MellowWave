@@ -12,7 +12,9 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(children: [
           const SizedBox(height: 5),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+            },
             title: const Text("Home",
                 style: TextStyle(
                     color: Color(0xFFEFC28D),
