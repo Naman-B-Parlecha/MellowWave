@@ -9,9 +9,9 @@
   
 </queries>
     <application
-        android:label="mellow_wave"
+        android:label="MellowWave"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
