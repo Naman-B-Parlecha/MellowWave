@@ -162,7 +162,7 @@ class _MusicScreenState extends State<MusicScreen> {
         playTrack(currentTrackIndex);
       });
     } else {
-      if (currentTrackIndex < musicUrls.length - 1) {
+      if (currentTrackIndex < 99) {
         playTrack(currentTrackIndex + 1);
       } else {
         playTrack(0);
@@ -349,6 +349,11 @@ class _MusicScreenState extends State<MusicScreen> {
                               Boxicons.bx_chevrons_right,
                               size: 45,
                             )),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Boxicons.bx_down_arrow_alt),
+                          iconSize: 30,
+                        )
                       ],
                     )
                   ]),

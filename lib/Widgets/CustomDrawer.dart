@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -28,7 +29,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           const SizedBox(height: 3),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              const link = 'https://github.com/Naman-Parlecha/MellowWave';
+              launchUrl(Uri.parse(link), mode: LaunchMode.inAppWebView);
+            },
             title: const Text("source code",
                 style: TextStyle(
                     color: Color(0xFFEFC28D),
