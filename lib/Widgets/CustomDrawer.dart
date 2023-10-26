@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -45,8 +46,10 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
-            title: const Text("share",
+            onTap: () {
+              Share.share('com.example.mellow_wave');
+            },
+            title: const Text("share app",
                 style: TextStyle(
                     color: Color(0xFFEFC28D),
                     fontSize: 20,

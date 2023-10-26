@@ -124,12 +124,10 @@ class _MusicScreenState extends State<MusicScreen> {
         position = newPosition;
       });
     });
-    // Listen for player completion to play the next track
+
     audioplayer.onPlayerComplete.listen((event) {
       playNextTrack();
     });
-    // Start playing the first track
-    // playTrack(currentTrackIndex);
   }
 
   String formatTime(Duration duration) {
@@ -349,11 +347,11 @@ class _MusicScreenState extends State<MusicScreen> {
                               Boxicons.bx_chevrons_right,
                               size: 45,
                             )),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Boxicons.bx_down_arrow_alt),
-                          iconSize: 30,
-                        )
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: Icon(Boxicons.bx_down_arrow_alt),
+                        //   iconSize: 30,
+                        // )
                       ],
                     )
                   ]),
