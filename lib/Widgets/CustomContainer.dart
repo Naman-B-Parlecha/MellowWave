@@ -40,14 +40,19 @@ class CustomContainer extends StatelessWidget {
               ),
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.only(left: 10, bottom: 10, right: 10),
-              child: Text(
-                name,
-                style: GoogleFonts.exo2(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFFEFC28D),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  name,
+                  style: GoogleFonts.exo2(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFFEFC28D),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
           ],

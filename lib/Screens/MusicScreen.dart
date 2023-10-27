@@ -241,22 +241,28 @@ class _MusicScreenState extends State<MusicScreen> {
             // Controlling music here
             // MusicControlBox(),
             Container(
+              padding: EdgeInsets.only(left: 5, right: 5),
               decoration: const BoxDecoration(
                   color: Color(0xFF292541),
                   borderRadius: BorderRadius.all(Radius.circular(15))),
               width: 350,
-              height: 200,
+              height: 220,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 10),
-                    Text(
-                      playlistItems[currentTrackIndex]['track']['name'],
-                      style: GoogleFonts.montserrat(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        playlistItems[currentTrackIndex]['track']['name'],
+                        style: GoogleFonts.montserrat(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(
                       playlistItems[currentTrackIndex]['track']['artists'][0]
@@ -373,13 +379,23 @@ class _MusicScreenState extends State<MusicScreen> {
                     musicUrls.add(previewUrl);
                   }
                 }
-                if (currentTrackIndex == index) {
-                  return Container(
+                final textColor = currentTrackIndex == index
+                    ? Color(0xFF292541)
+                    : Color(0xFFEFC28D);
+
+                return InkWell(
+                  onTap: () {
+                    playTrack(index);
+                  },
+                  child: Container(
                     height: 75,
                     margin: const EdgeInsets.only(left: 8, right: 8, bottom: 7),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color(0xFFEFC28D)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: currentTrackIndex == index
+                          ? Color(0xFFEFC28D)
+                          : Color(0xFF292541),
+                    ),
                     child: ListTile(
                       leading: ClipOval(
                         child: Image.network(
@@ -390,54 +406,21 @@ class _MusicScreenState extends State<MusicScreen> {
                       ),
                       title: Text(
                         track['name'],
-                        style: const TextStyle(
-                            color: Color(0xFF292541),
-                            fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       subtitle: Text(
                         track['artists'][0]['name'],
-                        style: const TextStyle(
-                            color: Color(0xFF292541),
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  );
-                } else {
-                  return InkWell(
-                    onTap: () {
-                      playTrack(index);
-                    },
-                    child: Container(
-                      height: 75,
-                      margin:
-                          const EdgeInsets.only(left: 8, right: 8, bottom: 7),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color(0xFF292541)),
-                      child: ListTile(
-                        leading: ClipOval(
-                          child: Image.network(
-                            albumImageUrl,
-                            width: 50.0,
-                            height: 50.0,
-                          ),
-                        ),
-                        title: Text(
-                          track['name'],
-                          style: const TextStyle(
-                              color: Color(0xFFEFC28D),
-                              fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Text(
-                          track['artists'][0]['name'],
-                          style: const TextStyle(
-                              color: Color(0xFFEFC28D),
-                              fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
               },
             ),
           ],
