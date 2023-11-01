@@ -60,8 +60,8 @@ class _MusicScreenState extends State<MusicScreen> {
 
   Future<String> authenticateSpotify() async {
     const String tokenUrl = 'https://accounts.spotify.com/api/token';
-    const String clientId = 'bfc704ac59b94b41ba6449ffb617515d';
-    const String clientSecret = 'a626dc290c954fd086aaf82ad87752f5';
+    const String clientId = 'xyz';
+    const String clientSecret = 'xyz';
     final String credentials =
         base64.encode(utf8.encode('$clientId:$clientSecret'));
 
